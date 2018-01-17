@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  gather_facts: false
+
+  tasks:
+  - name: Verify 3tier application is installed
+    uri:
+      url: http://frontend1.{{ GUID }}.example.opentlc.com
+      return_content: yes
+    register: command_result
+
+  - debug:
+      var: command_result

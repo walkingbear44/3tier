@@ -1,0 +1,35 @@
+---
+# Created by: Roebert Volpe
+# Version: 1.0
+# Date: 1/15/2018
+# Purpose:  Configure 3 Tier Environment
+
+- name: Configure yum repositories
+  hosts: all
+  gather_facts: false
+  roles: 
+    - role: repos
+
+- name: Configure haproxy 
+  hosts: frontends
+  gather_facts: false
+  roles: 
+    - role: haproxy
+
+- name: Configure tomcat
+  hosts: apps
+  gather_facts: false
+  roles: 
+    - role: tomcat
+
+- name: Configure postgres
+  hosts: appdbs
+  gather_facts: false
+  roles: 
+    - role: postgres
+
+- name: Configure apache
+  hosts: apps
+  gather_facts: false
+  roles: 
+    - role: apache

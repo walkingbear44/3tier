@@ -1,0 +1,27 @@
+---
+# tasks file for postgres
+
+- name: install postgres
+  yum:
+    name: postgresql-server
+    state: latest
+- stat:
+    path: /var/lib/pgsql/data/base
+  register: p
+
+- debug:
+    msg: "Directory exists..."
+  when: p.stat.exists
+
+- debug:
+    msg: "Directory does not exist"
+  when: p.stat.exists == False
+
+- command: postgresql-setup initdb
+  when: p.stat.exists == False
+
+- name: start and enable postgres at boot
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
